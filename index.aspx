@@ -1,15 +1,69 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="index" %>
+﻿<%@ Page Title="Dashboard - Expenses" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="index" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Income (Total)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800" runat="server" id="totalIncome">$0</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-piggy-bank fa-2x text-gray-300"></i>
+            </div>
+          </div>
         </div>
-    </form>
-</body>
-</html>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expense (Total)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800" runat="server" id="totalExpense">$0</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Wallet (Total)</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800" runat="server" id="totalWallet">$0</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-wallet fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card border-bottom-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h3>Tip of the Week:</h3>
+              <p runat="server" id="txtTip"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</asp:Content>
