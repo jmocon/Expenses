@@ -1,17 +1,17 @@
-﻿<%@ Page Title="Expense Report - Expenses" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="expensereport.aspx.cs" Inherits="expensereport" %>
+﻿<%@ Page Title="Income Report - Expenses" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="incomereport.aspx.cs" Inherits="incomereport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  <h3>Expense:</h3>
+  <h3>Income:</h3>
   <div class="row">
     <div class="col-12">
       <div class="card shadow py-1">
         <div class="card-body">
           <div class="row">
-            <div class="col-12" style="overflow-x:auto;">
+            <div class="col-12" style="overflow-x: auto;">
               <table class="table table-bordered" id="dataTable">
                 <thead>
                   <tr>
@@ -27,7 +27,7 @@
                     <th>Amount</th>
                   </tr>
                 </tfoot>
-                <tbody  runat="server" id="tableBody">
+                <tbody runat="server" id="tableBody">
                 </tbody>
               </table>
             </div>
@@ -37,7 +37,6 @@
     </div>
   </div>
 </asp:Content>
-
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptsHolder" runat="Server">
   <!-- Page level plugins -->
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>

@@ -8,16 +8,60 @@ public class Transaction
     {
     }
 
+    public void Add(TransactionModel mdl)
+    {
+        Database db = new Database();
+        db.Transaction_Add(mdl);
+    }
+
+    public List<TransactionModel> Get(int userId)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Transaction_Get(userId);
+
+        return ToList(dt);
+    }
+
     public List<TransactionModel> Get(int userId, int type)
     {
         Database db = new Database();
         DataTable dt = new DataTable();
-        List<TransactionModel> lst = new List<TransactionModel>();
-        decimal value = 0;
 
         dt = db.Transaction_Get(userId, type);
-        lst = ToList(dt);
-        return lst;
+
+        return ToList(dt);
+    }
+
+    public List<TransactionModel> GetByDays(int userId, int days, int limit)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Transaction_GetByUserIdDayLimit(userId, days, limit);
+
+        return ToList(dt);
+    }
+
+    public List<TransactionModel> GetByMonth(int userId, int months, int type)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Transaction_GetByPastMonth(userId, months, type);
+
+        return ToList(dt);
+    }
+
+    public List<TransactionModel> GetCurrentMonth(int userId, int type)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Transaction_GetByMonth(userId, type, DateTime.Now.Month);
+
+        return ToList(dt);
     }
 
     public decimal GetTotalIncome(int userId)
@@ -41,6 +85,20 @@ public class Transaction
         decimal value = 0;
 
         dt = db.Transaction_GetTotalExpense(userId);
+        foreach (DataRow row in dt.Rows)
+        {
+            value = decimal.Parse(row[0].ToString());
+        }
+        return value;
+    }
+
+    public decimal GetTotal(int userId)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+        decimal value = 0;
+
+        dt = db.Transaction_GetTotal(userId);
         foreach (DataRow row in dt.Rows)
         {
             value = decimal.Parse(row[0].ToString());

@@ -14,14 +14,101 @@ public class Database
 
     public Database()
     {
-        //db_config db_data = new db_config();
-        //conString = db_data.conString;
         conString = ConfigurationManager.AppSettings["ExpensesDB"];
 
         con = new SqlConnection(conString);
         cmd = new SqlCommand();
         adapter = new SqlDataAdapter();
         dt = new DataTable();
+    }
+
+    public DataTable Category_Get()
+    {
+        string sql = "Category_Get";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Category_Get(int type)
+    {
+        string sql = "Category_GetByType";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@type", type));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Payables_Get(int userId)
+    {
+        string sql = "Payables_GetByUserId";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
     }
 
     public DataTable Tips_GetMessage(int id)
@@ -54,6 +141,66 @@ public class Database
         return dt;
     }
 
+    public void Transaction_Add(TransactionModel mdl)
+    {
+        string sql = "Transaction_Add";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@type", mdl.Type));
+            cmd.Parameters.Add(new SqlParameter("@userId", mdl.User_Id));
+            cmd.Parameters.Add(new SqlParameter("@categoryId", mdl.Category_Id));
+            cmd.Parameters.Add(new SqlParameter("@amount", mdl.Amount));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
+    public DataTable Transaction_Get(int userId)
+    {
+        string sql = "Transaction_GetByUser_Id";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
     public DataTable Transaction_Get(int userId, int type)
     {
         string sql = "Transaction_GetByUser_IdType";
@@ -68,6 +215,132 @@ public class Database
             }
 
             cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@type", type));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Transaction_GetTotal(int userId)
+    {
+        string sql = "Transaction_GetTotalByUserId";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Transaction_GetByMonth(int userId, int type, int month)
+    {
+        string sql = "Transaction_GetByUser_IdTypeMonth";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@type", type));
+            cmd.Parameters.Add(new SqlParameter("@month", month));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Transaction_GetByUserIdDayLimit(int userId, int days, int limit)
+    {
+        string sql = "Transaction_GetByUserIdDayLimit";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@days", days));
+            cmd.Parameters.Add(new SqlParameter("@limit", limit));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Transaction_GetByPastMonth(int userId, int month, int type)
+    {
+        string sql = "Transaction_GetByMonthType";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@month", month));
             cmd.Parameters.Add(new SqlParameter("@type", type));
             cmd.CommandType = CommandType.StoredProcedure;
             adapter.SelectCommand = cmd;
@@ -145,9 +418,38 @@ public class Database
         return dt;
     }
 
+    public DataTable Critical_GetAmount(int userId)
+    {
+        string sql = "Transaction_GetCriticalByUser_Id";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
     public DataTable User_Login(string username, string password)
     {
-        int id = 0;
         string sql = "login_verify";
 
         try
@@ -176,7 +478,7 @@ public class Database
 
         return dt;
     }
-    
+
     public DataTable User_GetName(int id)
     {
         string sql = "User_GetNameById";

@@ -1,17 +1,17 @@
-﻿<%@ Page Title="Expense Report - Expenses" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="expensereport.aspx.cs" Inherits="expensereport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="payablereport.aspx.cs" Inherits="payablereport" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  <h3>Expense:</h3>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <h3>Payables:</h3>
   <div class="row">
     <div class="col-12">
       <div class="card shadow py-1">
         <div class="card-body">
           <div class="row">
-            <div class="col-12" style="overflow-x:auto;">
+            <div class="col-12" style="overflow-x: auto;">
               <table class="table table-bordered" id="dataTable">
                 <thead>
                   <tr>
@@ -27,7 +27,7 @@
                     <th>Amount</th>
                   </tr>
                 </tfoot>
-                <tbody  runat="server" id="tableBody">
+                <tbody runat="server" id="tableBody">
                 </tbody>
               </table>
             </div>
@@ -37,8 +37,8 @@
     </div>
   </div>
 </asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="scriptsHolder" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="scriptsHolder" Runat="Server">
+  
   <!-- Page level plugins -->
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -46,3 +46,4 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
 </asp:Content>
+

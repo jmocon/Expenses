@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public partial class expensereport : System.Web.UI.Page
+public partial class incomereport : System.Web.UI.Page
 {
     private List<CategoryModel> lstCategory;
 
@@ -26,7 +26,6 @@ public partial class expensereport : System.Web.UI.Page
                 GenerateTableContent();
             }
         }
-
     }
 
     private void GenerateTableContent()
@@ -35,7 +34,7 @@ public partial class expensereport : System.Web.UI.Page
         List<TransactionModel> lstTransaction = new List<TransactionModel>();
         string output = "";
 
-        lstTransaction = clsTransaction.Get(int.Parse(Session["User_Id"].ToString()), 1);
+        lstTransaction = clsTransaction.Get(int.Parse(Session["User_Id"].ToString()), 0);
 
         foreach (TransactionModel mdlTransaction in lstTransaction)
         {
@@ -55,7 +54,7 @@ public partial class expensereport : System.Web.UI.Page
         List<TransactionModel> lstTransaction = new List<TransactionModel>();
         string output = "";
 
-        lstTransaction = clsTransaction.GetCurrentMonth(int.Parse(Session["User_Id"].ToString()), 1);
+        lstTransaction = clsTransaction.GetCurrentMonth(int.Parse(Session["User_Id"].ToString()), 0);
 
         foreach (TransactionModel mdlTransaction in lstTransaction)
         {

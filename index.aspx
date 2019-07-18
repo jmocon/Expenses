@@ -53,7 +53,41 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 mb-4">
+    <div class="col-md-7 mb-4">
+      <div class="card border-bottom-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <h5>Recent Transactions: <small>(Top 20 within 30 days)</small></h5>
+              <table class="table table-bordered" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </tfoot>
+                <tbody  runat="server" id="tableBody">
+                  <tr>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 mb-4">
       <div class="card border-bottom-warning shadow h-100 py-2">
         <div class="card-body">
           <div class="row">
