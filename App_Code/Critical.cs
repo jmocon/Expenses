@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using System.Data;
 
 public class Critical
 {
     public Critical()
     {
+    }
+
+    public void Update(int userId, decimal amount)
+    {
+        Database db = new Database();
+        db.Critical_UpdateInsert(userId, amount);
     }
 
     public decimal GetAmount(int userId)

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 
 public class Payables
 {
     public Payables()
     {
+    }
+
+    public void Add(PayablesModel mdl)
+    {
+        Database db = new Database();
+        db.Payable_Add(mdl);
     }
 
     public List<PayablesModel> Get(int userId)
@@ -16,6 +20,16 @@ public class Payables
         DataTable dt = new DataTable();
 
         dt = db.Payables_Get(userId);
+
+        return ToList(dt);
+    }
+
+    public List<PayablesModel> GetUpcomming(int userId, int days)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Payables_GetUpcomming(userId,days);
 
         return ToList(dt);
     }

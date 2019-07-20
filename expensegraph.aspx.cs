@@ -40,9 +40,11 @@ public partial class expensegraph : System.Web.UI.Page
 
         foreach (string item in selectedMonths)
         {
-            mdlMonth = new MonthModel();
-            mdlMonth.Month = item;
-            mdlMonth.Amount = 0;
+            mdlMonth = new MonthModel
+            {
+                Month = item,
+                Amount = 0
+            };
             lstMonth.Add(mdlMonth);
         }
 

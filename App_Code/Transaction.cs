@@ -14,6 +14,12 @@ public class Transaction
         db.Transaction_Add(mdl);
     }
 
+    public void Delete(int id)
+    {
+        Database db = new Database();
+        db.Transaction_Delete(id);
+    }
+
     public List<TransactionModel> Get(int userId)
     {
         Database db = new Database();
@@ -60,6 +66,16 @@ public class Transaction
         DataTable dt = new DataTable();
 
         dt = db.Transaction_GetByMonth(userId, type, DateTime.Now.Month);
+
+        return ToList(dt);
+    }
+
+    public List<TransactionModel> GetAnnual(int userId)
+    {
+        Database db = new Database();
+        DataTable dt = new DataTable();
+
+        dt = db.Transaction_GetThisYear(userId);
 
         return ToList(dt);
     }

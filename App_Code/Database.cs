@@ -81,6 +81,124 @@ public class Database
         return dt;
     }
 
+    public void Critical_UpdateInsert(int userId, decimal amount)
+    {
+        string sql = "Critical_UpdateInsert";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@amount", amount));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
+    public DataTable Critical_GetAmount(int userId)
+    {
+        string sql = "Transaction_GetCriticalByUser_Id";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    protected void Feedback_Add(int userId, string message)
+    {
+        string sql = "Feedback_Add";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@message", message));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
+    public void Payable_Add(PayablesModel mdl)
+    {
+        string sql = "Payable_Add";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", mdl.User_Id));
+            cmd.Parameters.Add(new SqlParameter("@name", mdl.Name));
+            cmd.Parameters.Add(new SqlParameter("@amount", mdl.Amount));
+            cmd.Parameters.Add(new SqlParameter("@duedate", mdl.DueDate));
+            cmd.Parameters.Add(new SqlParameter("@dueday", mdl.DueDay));
+            cmd.Parameters.Add(new SqlParameter("@type", mdl.Type));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
     public DataTable Payables_Get(int userId)
     {
         string sql = "Payables_GetByUserId";
@@ -95,6 +213,37 @@ public class Database
             }
 
             cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
+    public DataTable Payables_GetUpcomming(int userId,int days)
+    {
+        string sql = "Payables_GetUpcommingByUser_IdDays";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.Parameters.Add(new SqlParameter("@days", days));
             cmd.CommandType = CommandType.StoredProcedure;
             adapter.SelectCommand = cmd;
             adapter.Fill(dt);
@@ -158,6 +307,33 @@ public class Database
             cmd.Parameters.Add(new SqlParameter("@userId", mdl.User_Id));
             cmd.Parameters.Add(new SqlParameter("@categoryId", mdl.Category_Id));
             cmd.Parameters.Add(new SqlParameter("@amount", mdl.Amount));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
+    public void Transaction_Delete(int id)
+    {
+        string sql = "Transaction_Delete";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@id", id));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.ExecuteNonQuery();
         }
@@ -358,6 +534,36 @@ public class Database
         return dt;
     }
 
+    public DataTable Transaction_GetThisYear(int userId)
+    {
+        string sql = "Transaction_GetThisYearByUser_Id";
+
+        try
+        {
+            cmd = new SqlCommand(sql, con);
+
+            if (con.State != System.Data.ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            cmd.Parameters.Add(new SqlParameter("@userId", userId));
+            cmd.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand = cmd;
+            adapter.Fill(dt);
+        }
+        catch (Exception ex)
+        {
+            err = ex.ToString();
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        return dt;
+    }
+
     public DataTable Transaction_GetTotalIncome(int userId)
     {
         string sql = "Transaction_GetTotalIncomeByUser_Id";
@@ -391,36 +597,6 @@ public class Database
     public DataTable Transaction_GetTotalExpense(int userId)
     {
         string sql = "Transaction_GetTotalExpenseByUser_Id";
-
-        try
-        {
-            cmd = new SqlCommand(sql, con);
-
-            if (con.State != System.Data.ConnectionState.Open)
-            {
-                con.Open();
-            }
-
-            cmd.Parameters.Add(new SqlParameter("@userId", userId));
-            cmd.CommandType = CommandType.StoredProcedure;
-            adapter.SelectCommand = cmd;
-            adapter.Fill(dt);
-        }
-        catch (Exception ex)
-        {
-            err = ex.ToString();
-        }
-        finally
-        {
-            con.Close();
-        }
-
-        return dt;
-    }
-
-    public DataTable Critical_GetAmount(int userId)
-    {
-        string sql = "Transaction_GetCriticalByUser_Id";
 
         try
         {

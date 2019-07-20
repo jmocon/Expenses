@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -9,11 +10,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void Page_Load(object sender, EventArgs e)
     {
         CheckSession();
-        CheckBalance();
-        User clsUser = new User();
-        user_name = clsUser.GetName(Session["User_Id"].ToString());
-
-        DisplayAlert();
+        if (!IsPostBack)
+        {
+            CheckBalance();
+            CheckDueDates();
+            User clsUser = new User();
+            user_name = clsUser.GetName(Session["User_Id"].ToString());
+            DisplayAlert();
+        }
     }
 
     private void DisplayAlert()
@@ -33,7 +37,61 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     private void CheckDueDates()
     {
+        Payables clsPayables = new Payables();
+        List<PayablesModel> lstPayables = new List<PayablesModel>();
+        DateTime dateToday = DateTime.Now;
 
+        lstPayables = new List<PayablesModel>();
+        lstPayables = clsPayables.GetUpcomming(int.Parse(Session["User_Id"].ToString()), 3);
+
+        foreach (PayablesModel mdl in lstPayables)
+        {
+            if (mdl.Type == 0)
+            {
+                int addDay = 0;
+                if (dateToday.Day > mdl.DueDay)
+                {
+                    addDay = DateTime.DaysInMonth(dateToday.Year, dateToday.Month) - dateToday.Day + mdl.DueDay;
+                }
+                else
+                {
+                    addDay = mdl.DueDay - dateToday.Day;
+                }
+                mdl.DueDate = DateTime.Now.AddDays(addDay);
+            }
+        }
+
+        lstPayables.Sort((x, y) => x.DueDate.CompareTo(y.DueDate));
+
+        foreach (PayablesModel mdl in lstPayables)
+        {
+            alertCounter++;
+
+            alertOutput += AlertContainer(
+               "calendar-day",
+               "warning",
+               "Due Date: " + mdl.DueDate.ToString("MMM dd, yyyy"),
+               "<p class='m-0'>Name: " + mdl.Name + "</p><p class='m-0'>" + "Amount: Php " + mdl.Amount + "</p>"
+               );
+            //if (mdl.Type == 0)
+            //{
+            //    alertOutput += AlertContainer(
+            //       "calendar-day",
+            //       "warning",
+            //       "Due Date: " + dateToday.ToString("MMM") + " " + mdl.DueDay + ", " + dateToday.Year.ToString(),
+            //       "<p class='m-0'>Name: " + mdl.Name + "</p><p class='m-0'>" + "Amount: Php " + mdl.Amount + "</p>"
+            //       );
+            //}
+            //else
+            //{
+            //    alertOutput += AlertContainer(
+            //       "calendar-day",
+            //       "warning",
+            //       "Due Date: " + mdl.DueDate.ToString("MMM dd, yyyy"),
+            //       "<p class='m-0'>Name: " + mdl.Name + "</p><p class='m-0'>" + "Amount: Php " + mdl.Amount + "</p>"
+            //       );
+            //}
+        }
     }
 
     private void CheckBalance()

@@ -5,7 +5,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  <h3>Expense:</h3>
+  <h3>Summary:</h3>
 
   <div class="row mb-4">
     <div class="col-12">

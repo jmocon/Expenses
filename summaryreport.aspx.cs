@@ -22,7 +22,22 @@ public partial class summaryreport : System.Web.UI.Page
         Category clsCategory = new Category();
         lstCategory = clsCategory.Get();
         lstCategoryAmount = TransferCategoryList(lstCategory);
-        GenerateTableContent();
+
+        if (Request.QueryString["c"] == null)
+        {
+            GenerateTableContent();
+        }
+        else
+        {
+            if (Request.QueryString["c"].ToString() == "annual")
+            {
+                GenerateTableContent(true);
+            }
+            else
+            {
+                GenerateTableContent();
+            }
+        }
         DisplayCategory();
     }
 
@@ -73,13 +88,20 @@ public partial class summaryreport : System.Web.UI.Page
         return lst;
     }
 
-    private void GenerateTableContent()
+    private void GenerateTableContent(bool annual = false)
     {
         Transaction clsTransaction = new Transaction();
         List<TransactionModel> lstTransaction = new List<TransactionModel>();
         string output = "";
 
-        lstTransaction = clsTransaction.Get(int.Parse(Session["User_Id"].ToString()));
+        if (annual)
+        {
+            lstTransaction = clsTransaction.GetAnnual(int.Parse(Session["User_Id"].ToString()));
+        }
+        else
+        {
+            lstTransaction = clsTransaction.Get(int.Parse(Session["User_Id"].ToString()));
+        }
 
         foreach (TransactionModel mdlTransaction in lstTransaction)
         {

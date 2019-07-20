@@ -57,7 +57,7 @@
       <div class="card border-bottom-warning shadow h-100 py-2">
         <div class="card-body">
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 overflow-auto">
               <h5>Recent Transactions: <small>(Top 20 within 30 days)</small></h5>
               <table class="table table-bordered" id="dataTable">
                 <thead>

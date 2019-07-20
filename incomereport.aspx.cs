@@ -38,10 +38,34 @@ public partial class incomereport : System.Web.UI.Page
 
         foreach (TransactionModel mdlTransaction in lstTransaction)
         {
-            output += "<tr>";
+            output += "<tr id='tr" + mdlTransaction.Id + "'>";
             output += "<td>" + mdlTransaction.DateCreated + "</td>";
             output += "<td>" + GetCategoryName(mdlTransaction.Category_Id) + "</td>";
             output += "<td>" + mdlTransaction.Amount + "</td>";
+            output += "<td class='text-center'><button type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#del_" + mdlTransaction.Id + "'><i class='fas fa-trash'></i> Delete</button>";
+
+            output += "<div class='modal fade' id='del_" + mdlTransaction.Id + "' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
+            output += "  <div class='modal-dialog' role='document'>";
+            output += "    <div class='modal-content'>";
+            output += "      <div class='modal-header'>";
+            output += "        <h5 class='modal-title' id='exampleModalLabel'>Delete Transaction?</h5>";
+            output += "        <button class='close' type='button' data-dismiss='modal' aria-label='Close'>";
+            output += "          <span aria-hidden='true'>×</span>";
+            output += "        </button>";
+            output += "      </div>";
+            output += "      <div class='modal-body text-left'><h3>Delete this Transaction?</h3>";
+            output += "      <p class='m-0'>Date Added: " + mdlTransaction.DateCreated + "</p>";
+            output += "      <p class='m-0'>Category: " + GetCategoryName(mdlTransaction.Category_Id) + "</p>";
+            output += "      <p class='m-0'>Amount: " + mdlTransaction.Amount + "</p>";
+            output += "      </div>";
+            output += "      <div class='modal-footer'>";
+            output += "        <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>";
+            output += "        <button class='btn btn-primary' onclick='deleteTransaction(" + mdlTransaction.Id + ")' data-dismiss='modal'>Delete</button>";
+            output += "      </div>";
+            output += "    </div>";
+            output += "  </div>";
+            output += "</div>";
+            output += "</td>";
             output += "</tr>";
         }
 
@@ -58,10 +82,34 @@ public partial class incomereport : System.Web.UI.Page
 
         foreach (TransactionModel mdlTransaction in lstTransaction)
         {
-            output += "<tr>";
+            output += "<tr id='tr" + mdlTransaction.Id + "'>";
             output += "<td>" + mdlTransaction.DateCreated + "</td>";
             output += "<td>" + GetCategoryName(mdlTransaction.Category_Id) + "</td>";
             output += "<td>" + mdlTransaction.Amount + "</td>";
+            output += "<td class='text-center'><button type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#del_" + mdlTransaction.Id + "'><i class='fas fa-trash'></i> Delete</button>";
+
+            output += "<div class='modal fade' id='del_" + mdlTransaction.Id + "' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
+            output += "  <div class='modal-dialog' role='document'>";
+            output += "    <div class='modal-content'>";
+            output += "      <div class='modal-header'>";
+            output += "        <h5 class='modal-title' id='exampleModalLabel'>Delete Transaction?</h5>";
+            output += "        <button class='close' type='button' data-dismiss='modal' aria-label='Close'>";
+            output += "          <span aria-hidden='true'>×</span>";
+            output += "        </button>";
+            output += "      </div>";
+            output += "      <div class='modal-body text-left'><h3>Delete this Transaction?</h3>";
+            output += "      <p class='m-0'>Date Added: " + mdlTransaction.DateCreated + "</p>";
+            output += "      <p class='m-0'>Category: " + GetCategoryName(mdlTransaction.Category_Id) + "</p>";
+            output += "      <p class='m-0'>Amount: " + mdlTransaction.Amount + "</p>";
+            output += "      </div>";
+            output += "      <div class='modal-footer'>";
+            output += "        <button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>";
+            output += "        <button class='btn btn-primary' onclick='deleteTransaction(" + mdlTransaction.Id + ")' data-dismiss='modal'>Delete</button>";
+            output += "      </div>";
+            output += "    </div>";
+            output += "  </div>";
+            output += "</div>";
+            output += "</td>";
             output += "</tr>";
         }
 
